@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: DateToColor.getColorFromDateTime(DateTime.now()),
       ),
       darkTheme: ThemeData(
+        primarySwatch: DateToColor.getColorFromDateTime(DateTime.now()),
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.system,
