@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:early_wakeup_stat_program/date_to_color.dart';
 import 'package:early_wakeup_stat_program/widgets/confirm_wakeup_button.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: DateToColor.getColorFromDateTime(DateTime.now()),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
