@@ -39,8 +39,11 @@ class WakeupTimeStorage {
   }
   
   /// Receives a list of dates and returns the wakeup time for each date.
-  /// If no wakeup time is set for a date, null is returned.
+  /// If no wakeup time is set for a date, it defaults to midnight.
   static List<DateTime?> getWakeupTimes(List<DateTime> dates) {
-    return dates.map((date) => getWakeupTime(dateTimeToDateString(date))).toList();
+    return dates.map((date) {
+      final wakeupTime = getWakeupTime(dateTimeToDateString(date));
+      return wakeupTime ?? DateTime(date.year, date.month, date.day);
+    }).toList();
   }
 }
