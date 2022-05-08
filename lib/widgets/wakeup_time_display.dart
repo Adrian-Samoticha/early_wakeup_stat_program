@@ -29,16 +29,22 @@ class WakeupTimeColumn extends StatelessWidget {
     return Stack(
       children: [
         _generateColumnBackground(),
-        _generateColumnForeground(),
+        ..._isMidnight(wakeupTime) ? const [] : [
+          _generateColumnForeground(),
+          _generateHourSegments(),
+        ],
       ]
     );
   }
   
   Widget _generateColumnBackground() {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(0, 0, 0, 0.1),
-        borderRadius: BorderRadius.circular(8.0),
+    return Opacity(
+      opacity: _isMidnight(wakeupTime) ? 0.06 : 0.1,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(0, 0, 0, 1.0),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
       ),
     );
   }
@@ -65,6 +71,24 @@ class WakeupTimeColumn extends StatelessWidget {
           )
         ),
       ),
+    );
+  }
+  
+  Widget _generateHourSegments() {
+    return Column(
+      children: List.generate(24, ((index) {
+        return Expanded(
+          child: Column(
+            children: [
+              Container(
+                height: 0.5,
+                color: index == 0 ? Colors.transparent : const Color.fromRGBO(0, 0, 0, 0.15),
+              ),
+              const Spacer(),
+            ]
+          ),
+        );
+      })).toList(),
     );
   }
   
