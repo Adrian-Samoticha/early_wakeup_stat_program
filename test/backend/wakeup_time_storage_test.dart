@@ -58,4 +58,24 @@ void main() {
       }
     }
   });
+  
+  testWidgets('wakeup time storage getWakeupTimes test', (tester) async {
+    WakeupTimeStorage.setWakeupTime(DateTime(2020, 1, 1, 12, 0, 0));
+    WakeupTimeStorage.setWakeupTime(DateTime(2020, 1, 2, 13, 0, 0));
+    WakeupTimeStorage.setWakeupTime(DateTime(2020, 1, 3, 14, 0, 0));
+    
+    final dates = [
+      DateTime(2020, 1, 1),
+      DateTime(2020, 1, 2),
+      DateTime(2020, 1, 3),
+      DateTime(2020, 1, 4),
+    ];
+    
+    expect(WakeupTimeStorage.getWakeupTimes(dates), [
+      DateTime(2020, 1, 1, 12, 0, 0),
+      DateTime(2020, 1, 2, 13, 0, 0),
+      DateTime(2020, 1, 3, 14, 0, 0),
+      DateTime(2020, 1, 4, 0, 0, 0),
+    ]);
+  });
 }
