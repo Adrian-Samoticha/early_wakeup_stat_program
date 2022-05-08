@@ -4,6 +4,7 @@ import 'package:early_wakeup_stat_program/backend/wakeup_time_storage.dart';
 import 'package:early_wakeup_stat_program/date_to_color.dart';
 import 'package:early_wakeup_stat_program/widgets/confirm_wakeup_button.dart';
 import 'package:early_wakeup_stat_program/widgets/wakeup_time_display.dart';
+import 'package:early_wakeup_stat_program/widgets/week_selector.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -97,6 +98,15 @@ class _MyHomePageState extends State<MyHomePage> {
             child: WakeupTimeDisplay(
               wakeupTimes: _wakeupTimes,
             ),
+          ),
+          WeekSelector(
+            wakeupTimesOffsetInDays: _wakeupTimesOffsetInDays,
+            onWeekChanged: (offsetInDays) {
+              setState(() {
+                _wakeupTimesOffsetInDays = offsetInDays;
+                _setWakeupTimes();
+              });
+            },
           ),
           ConfirmWakeupButton(
             onPressed: () {
