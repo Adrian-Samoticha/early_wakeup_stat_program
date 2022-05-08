@@ -92,38 +92,43 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: WakeupTimeDisplay(
-              wakeupTimes: _wakeupTimes,
-            ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1024.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: WakeupTimeDisplay(
+                  wakeupTimes: _wakeupTimes,
+                ),
+              ),
+              WeekSelector(
+                wakeupTimesOffsetInDays: _wakeupTimesOffsetInDays,
+                onWeekChanged: (offsetInDays) {
+                  setState(() {
+                    _wakeupTimesOffsetInDays = offsetInDays;
+                    _setWakeupTimes();
+                  });
+                },
+              ),
+              ConfirmWakeupButton(
+                onPressed: () {
+                  setState(() {
+                    WakeupTimeStorage.setWakeupTime(_now);
+                    
+                    _setWakeupTimes();
+                    _setWakeupTime();
+                    
+                    WakeupTimeStorage.saveWakeupTimes();
+                  });
+                },
+                isConfirmed: _wakeupTime != null,
+                now: _now,
+                wakeupTime: _wakeupTime,
+              ),
+            ]
           ),
-          WeekSelector(
-            wakeupTimesOffsetInDays: _wakeupTimesOffsetInDays,
-            onWeekChanged: (offsetInDays) {
-              setState(() {
-                _wakeupTimesOffsetInDays = offsetInDays;
-                _setWakeupTimes();
-              });
-            },
-          ),
-          ConfirmWakeupButton(
-            onPressed: () {
-              setState(() {
-                WakeupTimeStorage.setWakeupTime(_now);
-                
-                _setWakeupTimes();
-                _setWakeupTime();
-                
-                WakeupTimeStorage.saveWakeupTimes();
-              });
-            },
-            isConfirmed: _wakeupTime != null,
-            now: _now,
-            wakeupTime: _wakeupTime,
-          ),
-        ]
+        ),
       ),
     );
   }
